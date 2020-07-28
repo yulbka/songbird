@@ -6,7 +6,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    main:  './src/index.js',
+    main:  './src/index.jsx',
   },
   devtool: 'source-map',
   resolve: {
@@ -17,6 +17,17 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        enforce: 'pre',
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          emitError: true,
+          emitWarning: true,
+          failOnError: true
+        }
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -32,13 +43,31 @@ module.exports = {
         use: ['file-loader']
       },
       {
-        test: /\.s[ac]ss$/,
+        test: /\.module\.s(a|c)ss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+              options: {
+                modules: {
+                  localIdentName: "[name]__[local]___[hash:base64:5]",
+                },	
+                sourceMap: true,            
+              },
+          },
+          'sass-loader'
+        ],
+        include: /\.module\.scss$/
+      },
+      {
+        test: /\.(css|scss)$/,
         use: [
           'style-loader',
           'css-loader',
-          'sass-loader',
+          'sass-loader'
         ],
-      },
+        exclude: /\.module\.scss$/
+      },     
     ],    
   },
   plugins: [

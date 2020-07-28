@@ -1,0 +1,11 @@
+@import '../../assets//styles/mixins.scss';
+
+.wrapper {
+  padding: 20px 100px;
+  display: flex;
+}
+
+.container {
+  @include flex;
+  width: 100%;
+}

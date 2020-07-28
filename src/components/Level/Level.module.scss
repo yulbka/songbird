@@ -1,0 +1,7 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+.button {
+  color: $text-color;
+  @include font;
+}
