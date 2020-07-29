@@ -1,11 +1,13 @@
 @import '../../assets//styles/mixins.scss';
 
 .wrapper {
-  padding: 20px 100px;
-  display: flex;
+  margin: 0 auto;
+  padding: 20px 0 0;
+  @include flex(column);
+  max-width: 1200px;
 }
 
 .container {
-  @include flex;
+  @include flex();
   width: 100%;
 }

@@ -5,7 +5,7 @@
   font-style: $style;
 }
 
-@mixin flex($justify: space-between, $align: center, $direction: row) {
+@mixin flex($direction: row, $justify: space-between, $align: center) {
   display: flex;
   flex-direction: $direction;
   justify-content: $justify;

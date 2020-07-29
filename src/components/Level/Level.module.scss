@@ -1,7 +1,26 @@
 @import '../../assets/styles/variables.scss';
 @import '../../assets/styles/mixins.scss';
 
-.button {
-  color: $text-color;
-  @include font;
+.level {
+  flex-basis: 20%;
+  list-style: none;
+  & button {
+    padding: 10px;
+    width: 100%;
+    background-color: $button-color;
+    color: $text-color;
+    @include font;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    &:hover {
+      background-color: $button-color-hover;
+    }
+  }  
+}
+
+.active {
+  & button {
+    background-color: $button-color-active;
+  }
 }
