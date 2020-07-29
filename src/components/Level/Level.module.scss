@@ -12,10 +12,6 @@
     @include font;
     border: none;
     outline: none;
-    cursor: pointer;
-    &:hover {
-      background-color: $button-color-hover;
-    }
   }  
 }
 

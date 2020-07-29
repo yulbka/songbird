@@ -8,10 +8,7 @@ import styles from './Level.module.scss';
 export function Level({ id, name }) {
   return (
     <levelsContext.Consumer> 
-      {({activeButton, setActiveButton}) => <li 
-                  className={id === activeButton ? `${styles.level} ${styles.active}`: styles.level}
-                  onClick={() => setActiveButton(id)}
-                >
+      { ({activeButton}) => <li className={id === activeButton ? `${styles.level} ${styles.active}`: styles.level}>
         <button>{name}</button></li>}
     </levelsContext.Consumer>
   )

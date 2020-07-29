@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { levels, levelsContext } from '../components/LevelsList/levels-context';
-import { Header } from './Header/Header';
+import { Header } from '../components/Header/Header';
+import { Question } from '../components/Question/Question';
 
 import styles from './App.module.scss';
 export class App extends React.Component {
@@ -13,9 +14,9 @@ export class App extends React.Component {
     }
 
     this.state = {
-      buttons: levels.buttons,
-      activeButton: levels.buttons[0].key,
-      setActiveButton: this.setActiveButton
+      score: 0,
+      buttons: levels,
+      activeButton: levels[0].key,
     }
 
   }  
@@ -25,7 +26,8 @@ export class App extends React.Component {
       <div className={styles.wrapper}>
         <levelsContext.Provider value={this.state}>
           <Header />
-        </levelsContext.Provider>        
+        </levelsContext.Provider>
+        <Question title={'******'} isPlaying={false}/>    
       </div>
     )
   }
