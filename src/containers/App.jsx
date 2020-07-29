@@ -2,7 +2,7 @@ import React from 'react';
 
 import { levels, levelsContext } from '../components/LevelsList/levels-context';
 import { Header } from '../components/Header/Header';
-import { Question } from '../components/Question/Question';
+import { Question } from './Question/Question';
 
 import styles from './App.module.scss';
 export class App extends React.Component {
@@ -27,7 +27,7 @@ export class App extends React.Component {
         <levelsContext.Provider value={this.state}>
           <Header />
         </levelsContext.Provider>
-        <Question title={'******'} isPlaying={false}/>    
+        <Question title={'******'} />    
       </div>
     )
   }

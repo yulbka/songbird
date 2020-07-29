@@ -1,0 +1,30 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+.bar {  
+  width: calc(100% - 74px);
+}
+
+.progress {
+  position: relative;
+  height: 4px;
+}
+
+.circle {
+  position: absolute;
+  top: -5px;
+  width: 16px;
+  height: 16px;
+  background-color: $track-color;
+  border-radius: 50%;
+}
+
+.info {
+  margin-top: 8px;
+  @include flex;
+}
+
+.time {
+  color: $time-color;
+  @include font(11px);
+}
