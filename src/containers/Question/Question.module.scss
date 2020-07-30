@@ -8,10 +8,11 @@
   max-width: 1110px;
   background-color: $secondary-background-color;
   box-sizing: border-box;
-  & img {
-    margin-right: 40px;
-    border-radius: 15px;
-  }
+}
+
+.img {
+  margin-right: 40px;
+  border-radius: 15px;
 }
 
 .container {

@@ -11,7 +11,7 @@ export function Question({ title }) {
 
   return (
     <div className={styles.wrapper}>
-      <img src={imgSrc} alt="bird" width={200} height={165} />
+      <img className={styles.img} src={imgSrc} alt="bird" width={200} height={165} />
       <div className={styles.container}>
         <h3 className={styles.title}>{title}</h3>
         <Player audioSrc={audioSrc}/>
