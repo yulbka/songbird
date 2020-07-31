@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { levelsContext } from '../LevelsList/levels-context';
+import { LevelContext } from '../../containers/App';
 
 import styles from './Score.module.scss';
 
 export function Score() {
   return (
-    <levelsContext.Consumer>
+    <LevelContext.Consumer>
       { ({ score }) => <div className={styles.score}>{`Score: ${score}`}</div>}
-    </levelsContext.Consumer>
+    </LevelContext.Consumer>
   )
 }

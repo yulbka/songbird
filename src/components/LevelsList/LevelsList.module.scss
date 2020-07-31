@@ -2,4 +2,16 @@
   padding: 0;
   display: flex;
   width: 100%;
+  & li:first-of-type {
+    & button {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+  }
+  & li:last-of-type {
+    & button {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+  }
 }

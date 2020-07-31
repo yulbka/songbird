@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const levels = [
   {
     key: 'train',
@@ -21,6 +19,4 @@ export const levels = [
     key: 'sea',
     name: 'Морские птицы',
   }
-  ];
-
-export const levelsContext = React.createContext(levels);
+];

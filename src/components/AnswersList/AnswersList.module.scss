@@ -1,0 +1,12 @@
+@import '../../assets/styles/variables.scss';
+
+.list {
+  padding: 0;
+  flex-basis: 40.5%;
+  background-color: $secondary-background-color;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  & li:not(:last-of-type) {
+    border-bottom: 1px solid $border-color;
+  }
+}

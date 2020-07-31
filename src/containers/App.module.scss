@@ -1,7 +1,14 @@
 @import '../assets/styles/variables.scss';
+@import '../assets/styles/mixins.scss';
 
 .wrapper {
   margin: 0 auto;
   background-color: $primary-background-color;
   color: $text-color;
+}
+
+.answer-container {
+  margin: 0 auto;
+  @include flex;
+  max-width: 1110px;
 }
