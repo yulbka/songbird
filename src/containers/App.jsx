@@ -3,11 +3,11 @@ import React from 'react';
 import { Header } from '../components/Header/Header';
 import { Question } from './Question/Question';
 import { AnswersList } from '../components/AnswersList/AnswersList';
+import { Description } from '../components/Description/Description';
 import birdsData from '../assets/data/data';
 
 import styles from './App.module.scss';
 
-export const LevelContext = React.createContext();
 export class App extends React.Component {
   constructor(props) {
     super(props);
@@ -15,34 +15,60 @@ export class App extends React.Component {
     this.state = {
       score: 0,
       activeLevel: 0,
-      birds: birdsData[0],
-      currentBird: birdsData[0][0],
-      answers: []
+      currentBird: birdsData[0][Math.floor(Math.random() * Math.floor(birdsData.length))],
+      answers: [],
+      chosenBird: null,
+      isAnswered: false,
     }
 
   }
 
   checkAnswer(answer, id) {
+    this.chooseBird(id);
+    if (this.state.isAnswered) return;
     const currentBird = this.state.currentBird.name;
     const checkedAnswer = answer === currentBird ? { id, answer: 'correct'}:
      { id, answer: 'wrong'};
     this.setState({
       answers: [...this.state.answers, checkedAnswer]
     });
+    if (answer === currentBird) {
+      this.setState({ isAnswered: true });
+    }
+  }
+
+  chooseBird(id) {
+    const level = this.state.activeLevel;
+    this.setState({ chosenBird: birdsData[level][id - 1] });
   }
 
   render() {
-    const { activeLevel, score, answers } = this.state;
+    const { activeLevel, score, currentBird, answers, isAnswered, chosenBird } = this.state;
     return (
-      <LevelContext.Provider value={{score, activeLevel, answers}}>
-        <div className={styles.wrapper}>
-          <Header />
-          <Question title={'******'} />
-            <div className={styles['answer-container']}>
-              <AnswersList birds={this.state.birds} checkAnswer={this.checkAnswer.bind(this)}/>
-            </div>
-          </div>
-      </LevelContext.Provider>      
+      <div className={styles.wrapper}>
+        <Header activeLevel={activeLevel} score={score}/>
+        <Question
+          title={currentBird.name}
+          audioSrc={currentBird.audio}
+          imageSrc={currentBird.image}
+          isAnswered={isAnswered}
+        />
+        <div className={styles['answer-container']}>
+          <AnswersList
+            activeLevel={activeLevel}
+            answers={answers}
+            checkAnswer={this.checkAnswer.bind(this)}
+          />
+          <Description
+            chosenBird={chosenBird}
+            imageSrc={chosenBird ? chosenBird.image: null}
+            title={chosenBird ? chosenBird.name: null}
+            audioSrc={chosenBird ? chosenBird.audio: null}
+            species={chosenBird ? chosenBird.species: null}
+            description={chosenBird ? chosenBird.description: null}
+          />
+        </div>
+      </div>     
     )
   }
 }

@@ -1,13 +1,14 @@
 import React from 'react';
-
-import { LevelContext } from '../../containers/App';
+import PropTypes from 'prop-types';
 
 import styles from './Score.module.scss';
 
-export function Score() {
-  return (
-    <LevelContext.Consumer>
-      { ({ score }) => <div className={styles.score}>{`Score: ${score}`}</div>}
-    </LevelContext.Consumer>
+export function Score({ score }) {
+  return (    
+     <div className={styles.score}>{`Score: ${score}`}</div>
   )
+}
+
+Score.propTypes = {
+  score: PropTypes.number,
 }

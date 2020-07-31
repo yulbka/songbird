@@ -1,0 +1,48 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+.wrapper {
+  padding: 15px;
+  flex-basis: 48%;
+  height: 293px;
+  background-color: #303030;
+  border: 1px solid #555;
+  border-radius: 5px;
+  @include font;
+  box-sizing: border-box;
+}
+
+.text, .description {
+  margin: 0;
+  line-height: 20px;
+}
+
+.topContainer {
+  @include flex;
+}
+
+.list {
+  padding: 0 10px 0 0;
+  width: 100%;
+  & li {
+    list-style: none;
+    border-bottom: 1px solid $border-color;
+    &:last-of-type {
+      margin-top: 15px;
+      border: none;
+    }
+    & p {
+      margin: 10px 0;
+      @include font;
+    }
+  }
+}
+
+.title {
+  margin: 0 0 10px;
+  @include font(22.5px, bold);
+}
+
+.description {
+  margin-top: 20px;
+}
