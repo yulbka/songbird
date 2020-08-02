@@ -5,7 +5,7 @@ import styles from './Score.module.scss';
 
 export function Score({ score }) {
   return (    
-     <div className={styles.score}>{`Score: ${score}`}</div>
+     <div className={styles.score}>{`Счёт: ${score}`}</div>
   )
 }
 

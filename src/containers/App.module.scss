@@ -3,6 +3,7 @@
 
 .wrapper {
   margin: 0 auto;
+  height: 100vh;
   background-color: $primary-background-color;
   color: $text-color;
 }
@@ -10,5 +11,6 @@
 .answer-container {
   margin: 0 auto;
   @include flex;
+  flex-wrap: wrap;
   max-width: 1110px;
 }

@@ -5,8 +5,8 @@
   padding: 15px;
   flex-basis: 48%;
   height: 293px;
-  background-color: #303030;
-  border: 1px solid #555;
+  background-color: $secondary-background-color;
+  border: 1px solid $border-color;
   border-radius: 5px;
   @include font;
   box-sizing: border-box;

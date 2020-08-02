@@ -11,7 +11,7 @@ export function Question({ title, audioSrc, imageSrc, isAnswered }) {
   const defaultTitle = '******';
 
   return (
-    <div className={styles.wrapper}>;
+    <div className={styles.wrapper}>
       <BirdImage imageSrc={isAnswered ? imageSrc: defaultImg} />
       <div className={styles.container}>
         <h3 className={styles.title}>{isAnswered ? title: defaultTitle}</h3>

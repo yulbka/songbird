@@ -4,6 +4,7 @@ import { Header } from '../components/Header/Header';
 import { Question } from './Question/Question';
 import { AnswersList } from '../components/AnswersList/AnswersList';
 import { Description } from '../components/Description/Description';
+import { Button } from '../components/Button/Button';
 import birdsData from '../assets/data/data';
 
 import styles from './App.module.scss';
@@ -42,6 +43,17 @@ export class App extends React.Component {
     this.setState({ chosenBird: birdsData[level][id - 1] });
   }
 
+  goToNextLevel() {
+    if (!this.state.isAnswered) return;
+    this.setState({
+      activeLevel: this.state.activeLevel + 1,
+      currentBird: birdsData[this.state.activeLevel + 1][Math.floor(Math.random() * Math.floor(birdsData.length))],
+      answers: [],
+      chosenBird: null,
+      isAnswered: false,
+    })
+  }
+
   render() {
     const { activeLevel, score, currentBird, answers, isAnswered, chosenBird } = this.state;
     return (
@@ -67,6 +79,7 @@ export class App extends React.Component {
             species={chosenBird ? chosenBird.species: null}
             description={chosenBird ? chosenBird.description: null}
           />
+          <Button isAnswered={isAnswered} handleClick={this.goToNextLevel.bind(this)} />
         </div>
       </div>     
     )
