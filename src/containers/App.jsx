@@ -20,6 +20,7 @@ export class App extends React.Component {
       answers: [],
       chosenBird: null,
       isAnswered: false,
+      numAttempts: 0,
     }
 
   }
@@ -28,14 +29,25 @@ export class App extends React.Component {
     this.chooseBird(id);
     if (this.state.isAnswered) return;
     const currentBird = this.state.currentBird.name;
-    const checkedAnswer = answer === currentBird ? { id, answer: 'correct'}:
-     { id, answer: 'wrong'};
-    this.setState({
-      answers: [...this.state.answers, checkedAnswer]
-    });
+    const score = this.countScore();
     if (answer === currentBird) {
-      this.setState({ isAnswered: true });
+      this.setState({
+        score: this.state.score + score,
+        isAnswered: true,
+        answers: [...this.state.answers, { id, answer: 'correct'}],
+      });
+    } else {
+      this.setState({
+        answers: [...this.state.answers, { id, answer: 'wrong'}],
+        numAttempts: this.state.numAttempts + 1,
+      });
     }
+  }
+
+  countScore() {
+    const score = 5;
+    const addedScore = score - this.state.numAttempts;
+    return addedScore;
   }
 
   chooseBird(id) {
@@ -51,6 +63,7 @@ export class App extends React.Component {
       answers: [],
       chosenBird: null,
       isAnswered: false,
+      numAttempts: 0,
     })
   }
 
