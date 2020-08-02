@@ -15,7 +15,7 @@ export function Question({ title, audioSrc, imageSrc, isAnswered }) {
       <BirdImage imageSrc={isAnswered ? imageSrc: defaultImg} />
       <div className={styles.container}>
         <h3 className={styles.title}>{isAnswered ? title: defaultTitle}</h3>
-        <Player audioSrc={audioSrc}/>
+        <Player audioSrc={audioSrc} />
       </div>
     </div>
   )

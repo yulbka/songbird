@@ -34,6 +34,12 @@ export class Player extends React.Component {
     this.audioRef.current.addEventListener('ended', this.pauseAudio);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.audioSrc != prevProps.audioSrc) {
+      this.setState({ isPlaying: false })
+    }
+  }
+
   componentWillUnmount() {
     this.audioRef.current.removeEventListener('ended', this.pauseAudio);
     this.audioRef.current.removeEventListener('loadedMetadata', this.setAudioDuration);
@@ -105,5 +111,5 @@ export class Player extends React.Component {
 }
 
 Player.propTypes = {
-  audioSrc: PropTypes.string
+  audioSrc: PropTypes.string,
 }

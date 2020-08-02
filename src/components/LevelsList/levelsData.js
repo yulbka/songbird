@@ -12,6 +12,10 @@ export const levels = [
     name: 'Лесные птицы',
   },
   {
+    key: 'song',
+    name: 'Певчие птицы',
+  },
+  {
     key: 'predator',
     name: 'Хищные птицы', 
   },
