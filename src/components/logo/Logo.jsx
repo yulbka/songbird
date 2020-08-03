@@ -1,7 +1,9 @@
 import React from 'react';
 
+import logo from '../../assets/images/logo.png';
+
 export function Logo() {
   return (
-    <img src="/assets/images/logo.png" alt="logo" width="200" height="66"/>
+    <img src={logo} alt="logo" width="200" height="66"/>
   )
 }

@@ -7,7 +7,6 @@ import { Player } from '../../containers/Player/Player';
 import styles from './Description.module.scss';
 
 export function Description({ chosenBird, imageSrc, title, audioSrc, species, description }) {
-  console.log(chosenBird);
   return (
     <div className={styles.wrapper}>
       {chosenBird ? (

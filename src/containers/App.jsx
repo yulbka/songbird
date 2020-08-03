@@ -6,6 +6,7 @@ import { AnswersList } from '../components/AnswersList/AnswersList';
 import { Description } from '../components/Description/Description';
 import { Button } from '../components/Button/Button';
 import { Result } from '../components/Result/Result';
+import { Win } from '../components/Win/Win';
 import birdsData from '../assets/data/data';
 
 import styles from './App.module.scss';
@@ -97,19 +98,23 @@ export class App extends React.Component {
 
   render() {
     const { activeLevel, score, currentBird, answers, isAnswered, chosenBird, isGameEnded } = this.state;
+    console.log(currentBird);
     const maxScore = this.baseScore * birdsData.length;
     return (
       <div className={styles.wrapper}>
         <Header activeLevel={activeLevel} score={score}/>        
         {isGameEnded ? (
-          <Result
+          (score === maxScore) ? (
+            <Win />
+          ): (
+            <Result
             score={score}
             maxScore={maxScore}
             isAnswered={isAnswered}
             handleClick={this.goToNextLevel.bind(this)}
             isGameEnded={isGameEnded}
           />
-        ) : (
+          )) : (
           <React.Fragment>
           <Question
             title={currentBird.name}
