@@ -10,13 +10,23 @@
   border-radius: 5px;
   box-sizing: border-box;
   text-align: center;
+  @include media-mobile {
+    padding: 30px 10px;;
+  }
 }
 
 .title {
   margin: 0 0 20px;
   @include font(72px);
+  @include media-mobile {
+    font-size: 34px;
+  }
 }
 
 .img {
   border-radius: 5px;
+  @include media-mobile {
+    width: 250px;
+    height: 335px;
+  }
 }

@@ -1,6 +1,10 @@
 @import '../assets/styles/variables.scss';
 @import '../assets/styles/mixins.scss';
 
+body {
+  background-color: $primary-background-color;
+}
+
 .wrapper {
   margin: 0 auto;
   padding: 0 30px;

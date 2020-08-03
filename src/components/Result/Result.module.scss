@@ -15,6 +15,9 @@
 .title {
   margin: 0 0 20px;
   @include font(72px);
+  @include media-mobile {
+    font-size: 34px;
+  }
 }
 
 .text {

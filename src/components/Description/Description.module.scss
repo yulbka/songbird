@@ -2,7 +2,6 @@
 @import '../../assets/styles/mixins.scss';
 
 .wrapper {
-  margin-bottom: 16px;
   padding: 15px;
   flex-basis: 49%;
   height: 293px;
@@ -12,6 +11,7 @@
   @include font;
   box-sizing: border-box;
   @include media-laptop {
+    margin-bottom: 16px;
     flex-basis: 100%;
     height: auto;
   }
