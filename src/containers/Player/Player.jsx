@@ -38,6 +38,11 @@ export class Player extends React.Component {
     if (this.props.audioSrc != prevProps.audioSrc) {
       this.setState({ isPlaying: false })
     }
+    if (this.props.isAnswered != prevProps.isAnswered) {
+      if (this.props.isAnswered) {
+        this.pauseAudio();
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -112,4 +117,5 @@ export class Player extends React.Component {
 
 Player.propTypes = {
   audioSrc: PropTypes.string,
+  isAnswered: PropTypes.bool
 }

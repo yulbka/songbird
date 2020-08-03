@@ -27,7 +27,8 @@ export class App extends React.Component {
     }
 
     this.baseScore = 5;
-
+    this.audioWin = new Audio('assets/audio/win.mp3');
+    this.audioError = new Audio('assets/audio/error.mp3');
   }
 
   checkAnswer(answer, id) {
@@ -41,11 +42,15 @@ export class App extends React.Component {
         isAnswered: true,
         answers: [...this.state.answers, { id, answer: 'correct'}],
       });
+      this.audioWin.currentTime = 0;
+      this.audioWin.play();
     } else {
       this.setState({
         answers: [...this.state.answers, { id, answer: 'wrong'}],
         numAttempts: this.state.numAttempts + 1,
       });
+      this.audioError.currentTime = 0;
+      this.audioError.play();
     }
   }
 
