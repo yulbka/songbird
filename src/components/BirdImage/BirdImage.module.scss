@@ -1,4 +1,9 @@
+@import '../../assets/styles/mixins.scss';
+
 .img {
   margin-right: 40px;
   border-radius: 15px;
+  @include media-mobile {
+    margin-right: 0;
+  }
 }
