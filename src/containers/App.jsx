@@ -8,6 +8,8 @@ import { Button } from '../components/Button/Button';
 import { Result } from '../components/Result/Result';
 import { Win } from '../components/Win/Win';
 import birdsData from '../assets/data/data';
+import { levels } from '../components/LevelsList/levelsData';
+import history from 'history/hash';
 
 import styles from './App.module.scss';
 
@@ -17,7 +19,6 @@ export class App extends React.Component {
 
     this.state = {
       score: 0,
-      activeLevel: 0,
       currentBird: birdsData[0][Math.floor(Math.random() * Math.floor(birdsData.length))],
       answers: [],
       chosenBird: null,
@@ -60,19 +61,21 @@ export class App extends React.Component {
   }
 
   chooseBird(id) {
-    const level = this.state.activeLevel;
+    const path = history.location.pathname.slice(1);
+    const level = levels.findIndex((level) => level.key === path);
     this.setState({ chosenBird: birdsData[level][id - 1] });
   }
 
   goToNextLevel() {
-    const { activeLevel, isAnswered, isGameEnded } = this.state;
+    const { isAnswered, isGameEnded } = this.state;
+    const path = history.location.pathname.slice(1);
+    const activeLevel = levels.findIndex((level) => level.key === path);
     if (!isAnswered) return;
     if (isGameEnded) {
       return this.restartGame();
     }
     const level = (activeLevel === birdsData.length - 1) ? 0: activeLevel + 1;
     this.setState({
-      activeLevel: level,
       currentBird: birdsData[level][Math.floor(Math.random() * Math.floor(birdsData.length))],
       answers: [],
       chosenBird: null,
@@ -80,18 +83,18 @@ export class App extends React.Component {
       numAttempts: 0,
       isGameEnded: false
     });
-    if (this.state.activeLevel === birdsData.length - 1) {
+    if (activeLevel === birdsData.length - 1) {
       this.setState({
         isGameEnded: true,
         isAnswered: true,
       });
     }
+    if (!isGameEnded) history.push(`/${levels[level].key}`);
   }
 
   restartGame() {
     this.setState({
       score: 0,
-      activeLevel: 0,
       currentBird: birdsData[0][Math.floor(Math.random() * Math.floor(birdsData.length))],
       answers: [],
       chosenBird: null,
@@ -99,15 +102,18 @@ export class App extends React.Component {
       numAttempts: 0,
       isGameEnded: false
     });
+    history.push('/train');
   }
 
   render() {
-    const { activeLevel, score, currentBird, answers, isAnswered, chosenBird, isGameEnded } = this.state;
+    const { score, answers, isAnswered, currentBird, chosenBird, isGameEnded } = this.state;
+    const path = history.location.pathname.slice(1);
+    const level = levels.findIndex((level) => level.key === path);
     console.log(currentBird);
     const maxScore = this.baseScore * birdsData.length;
     return (
       <div className={styles.wrapper}>
-        <Header activeLevel={activeLevel} score={score}/>        
+        <Header activeLevel={level} score={score}/>        
         {isGameEnded ? (
           (score === maxScore) ? (
             <Win />
@@ -129,7 +135,7 @@ export class App extends React.Component {
           />
           <div className={styles['answer-container']}>
           <AnswersList
-            activeLevel={activeLevel}
+            activeLevel={level}
             answers={answers}
             checkAnswer={this.checkAnswer.bind(this)}
           />
