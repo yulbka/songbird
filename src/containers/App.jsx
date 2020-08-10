@@ -7,7 +7,6 @@ import { Description } from '../components/Description/Description';
 import { Button } from '../components/Button/Button';
 import { Result } from '../components/Result/Result';
 import { Win } from '../components/Win/Win';
-import birdsData from '../assets/data/data';
 import { levels } from '../components/LevelsList/levelsData';
 import history from 'history/hash';
 
@@ -19,17 +18,38 @@ export class App extends React.Component {
 
     this.state = {
       score: 0,
-      currentBird: birdsData[0][Math.floor(Math.random() * Math.floor(birdsData.length))],
+      birds: [],
+      currentBird: null,
       answers: [],
       chosenBird: null,
       isAnswered: false,
       numAttempts: 0,
       isGameEnded: false,
+      levelsNumber: null,
     }
 
     this.baseScore = 5;
     this.audioWin = new Audio('assets/audio/win.mp3');
     this.audioError = new Audio('assets/audio/error.mp3');
+  }
+
+  componentDidMount() {
+    const level = history.location.pathname.slice(1);
+    fetch('http://localhost:3000/count')
+      .then(res => res.text())
+      .then(text => {
+        console.log(text)
+        this.setState({ levelsNumber: text })
+      });   
+    fetch(`http://localhost:3000/${level}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          birds: data,
+          currentBird: data[Math.floor(Math.random() * Math.floor(6))],
+        });
+      });    
   }
 
   checkAnswer(answer, id) {
@@ -61,29 +81,28 @@ export class App extends React.Component {
   }
 
   chooseBird(id) {
-    const path = history.location.pathname.slice(1);
-    const level = levels.findIndex((level) => level.key === path);
-    this.setState({ chosenBird: birdsData[level][id - 1] });
+    const { birds } = this.state;
+    console.log(birds);
+    this.setState({ chosenBird: birds[id - 1] });
   }
 
   goToNextLevel() {
-    const { isAnswered, isGameEnded } = this.state;
+    const { isAnswered, isGameEnded, levelsNumber } = this.state;
     const path = history.location.pathname.slice(1);
     const activeLevel = levels.findIndex((level) => level.key === path);
     if (!isAnswered) return;
     if (isGameEnded) {
       return this.restartGame();
     }
-    const level = (activeLevel === birdsData.length - 1) ? 0: activeLevel + 1;
+    const level = (activeLevel === levelsNumber - 1) ? 0: activeLevel + 1;
     this.setState({
-      currentBird: birdsData[level][Math.floor(Math.random() * Math.floor(birdsData.length))],
       answers: [],
       chosenBird: null,
       isAnswered: false,
       numAttempts: 0,
       isGameEnded: false
     });
-    if (activeLevel === birdsData.length - 1) {
+    if (activeLevel === levelsNumber - 1) {
       this.setState({
         isGameEnded: true,
         isAnswered: true,
@@ -95,7 +114,7 @@ export class App extends React.Component {
   restartGame() {
     this.setState({
       score: 0,
-      currentBird: birdsData[0][Math.floor(Math.random() * Math.floor(birdsData.length))],
+      currentBird: null,
       answers: [],
       chosenBird: null,
       isAnswered: false,
@@ -106,11 +125,12 @@ export class App extends React.Component {
   }
 
   render() {
-    const { score, answers, isAnswered, currentBird, chosenBird, isGameEnded } = this.state;
+    const { score, answers, isAnswered, currentBird, chosenBird, isGameEnded, levelsNumber } = this.state;
+    console.log(this.state);
     const path = history.location.pathname.slice(1);
     const level = levels.findIndex((level) => level.key === path);
     console.log(currentBird);
-    const maxScore = this.baseScore * birdsData.length;
+    const maxScore = this.baseScore * levelsNumber;
     return (
       <div className={styles.wrapper}>
         <Header activeLevel={level} score={score}/>        
@@ -128,9 +148,9 @@ export class App extends React.Component {
           )) : (
           <React.Fragment>
           <Question
-            title={currentBird.name}
-            audioSrc={currentBird.audio}
-            imageSrc={currentBird.image}
+            title={currentBird && currentBird.name}
+            audioSrc={currentBird && currentBird.audio}
+            imageSrc={currentBird && currentBird.image}
             isAnswered={isAnswered}
           />
           <div className={styles['answer-container']}>
