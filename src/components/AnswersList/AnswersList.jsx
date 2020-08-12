@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Answer } from '../Answer/Answer';
-import birdsData from '../../assets/data/data';
 
 import styles from './AnswersList.module.scss';
 
-export function AnswersList({ activeLevel, checkAnswer, answers }) {
+export function AnswersList({ birds, checkAnswer, answers }) {
   return (
     <ul className={styles.list}>
-      {birdsData[activeLevel].map((bird) => {
+      {birds.map((bird) => {
         return <Answer
           key={bird.id}
           name={bird.name}
@@ -23,6 +22,7 @@ export function AnswersList({ activeLevel, checkAnswer, answers }) {
 }
 
 AnswersList.propTypes = {
+  birds: PropTypes.array,
   activeLevel: PropTypes.number,
   checkAnswer: PropTypes.func,
   answers: PropTypes.array

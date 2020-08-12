@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Header } from '../components/Header/Header';
 import { Question } from './Question/Question';
@@ -37,19 +38,32 @@ export class App extends React.Component {
     const level = history.location.pathname.slice(1);
     fetch('http://localhost:3000/count')
       .then(res => res.text())
-      .then(text => {
-        console.log(text)
-        this.setState({ levelsNumber: text })
+      .then(data => {
+        this.setState({ levelsNumber: data })
       });   
     fetch(`http://localhost:3000/${level}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({
           birds: data,
-          currentBird: data[Math.floor(Math.random() * Math.floor(6))],
+          currentBird: data[Math.floor(Math.random() * Math.floor(this.state.levelsNumber))],
         });
       });    
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      const level = history.location.pathname.slice(1);
+      console.log(level);
+      fetch(`http://localhost:3000/${level}`)
+        .then(res => res.json())
+        .then(data => {
+          this.setState({
+            birds: data,
+            currentBird: data[Math.floor(Math.random() * Math.floor(this.state.levelsNumber))],
+          });
+        });
+    }
   }
 
   checkAnswer(answer, id) {
@@ -88,7 +102,8 @@ export class App extends React.Component {
 
   goToNextLevel() {
     const { isAnswered, isGameEnded, levelsNumber } = this.state;
-    const path = history.location.pathname.slice(1);
+    const { location } = this.props;
+    const path = location.pathname.slice(1);
     const activeLevel = levels.findIndex((level) => level.key === path);
     if (!isAnswered) return;
     if (isGameEnded) {
@@ -108,7 +123,8 @@ export class App extends React.Component {
         isAnswered: true,
       });
     }
-    if (!isGameEnded) history.push(`/${levels[level].key}`);
+    if (!isGameEnded) this.props.history.replace(`/${levels[level].key}`);
+    console.log(this.props.history);
   }
 
   restartGame() {
@@ -121,13 +137,15 @@ export class App extends React.Component {
       numAttempts: 0,
       isGameEnded: false
     });
-    history.push('/train');
+    this.props.history.replace('/train');
   }
 
   render() {
-    const { score, answers, isAnswered, currentBird, chosenBird, isGameEnded, levelsNumber } = this.state;
-    console.log(this.state);
-    const path = history.location.pathname.slice(1);
+    const { score, answers, isAnswered, birds, currentBird, chosenBird, isGameEnded, levelsNumber } = this.state;
+    console.log(birds);
+    const { location } = this.props;
+    const path = location.pathname.slice(1);
+    console.log(path);
     const level = levels.findIndex((level) => level.key === path);
     console.log(currentBird);
     const maxScore = this.baseScore * levelsNumber;
@@ -155,7 +173,7 @@ export class App extends React.Component {
           />
           <div className={styles['answer-container']}>
           <AnswersList
-            activeLevel={level}
+            birds={birds}
             answers={answers}
             checkAnswer={this.checkAnswer.bind(this)}
           />
@@ -178,4 +196,9 @@ export class App extends React.Component {
       </div>     
     )
   }
+}
+
+App.propTypes = {
+  location: PropTypes.shape(Object),
+  history: PropTypes.shape(Object),
 }

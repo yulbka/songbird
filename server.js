@@ -310,33 +310,41 @@ const birdsData = [
 
 app.options('*', cors());
 
-app.get('/level', (req, res) => {
-  switch(req.params.level) {
-    case 'train':
-      res.send(birdsData[0]);
-      break;
-    case 'sparrow':
-      res.send(birdsData[1]);
-      break;
-    case 'forest':
-      res.send(birdsData[2]);
-      break;
-    case 'song':
-      res.send(birdsData[3]);
-      break;
-    case 'predator':
-      res.send(birdsData[4]);
-      break;
-    case 'sea':
-      res.send(birdsData[5]);
-      break;
-    case 'count':
-      res.send(birdsData.length);
-      break;
-    default:
-      res.send(birdsData);
-      break;
-    }  
+app.get('/', (req, res) => {
+  res.send(birdsData);
+});
+
+app.get('/train', (req, res) => {
+  res.send(birdsData[0]);
+});
+
+app.get('/sparrow', (req, res) => {
+  res.send(birdsData[1]);
+});
+
+app.get('/forest', (req, res) => {
+  res.send(birdsData[2]);
+});
+
+app.get('/forest', (req, res) => {
+  res.send(birdsData[2]);
+});
+
+app.get('/song', (req, res) => {
+  res.send(birdsData[3]);
+});
+
+app.get('/predator', (req, res) => {
+  res.send(birdsData[4]);
+});
+
+app.get('/sea', (req, res) => {
+  res.send(birdsData[5]);
+});
+
+app.get('/count', (req, res) => {
+  res.set('Content-Type', 'text/plain');
+  res.send(birdsData.length.toString());
 });
 
 app.listen(port, () => {
