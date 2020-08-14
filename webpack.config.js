@@ -13,6 +13,7 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   devServer: {
+    historyApiFallback: true,
     contentBase: './dist'
   },
   module: {
@@ -95,6 +96,7 @@ module.exports = {
   ],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   }
 }

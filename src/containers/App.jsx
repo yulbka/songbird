@@ -9,7 +9,6 @@ import { Button } from '../components/Button/Button';
 import { Result } from '../components/Result/Result';
 import { Win } from '../components/Win/Win';
 import { levels } from '../components/LevelsList/levelsData';
-import history from 'history/hash';
 
 import styles from './App.module.scss';
 
@@ -35,7 +34,7 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    const level = history.location.pathname.slice(1);
+    const level = this.props.history.location.pathname.slice(1);
     fetch('http://localhost:3000/count')
       .then(res => res.text())
       .then(data => {
@@ -53,7 +52,7 @@ export class App extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-      const level = history.location.pathname.slice(1);
+      const level = this.props.history.location.pathname.slice(1);
       console.log(level);
       fetch(`http://localhost:3000/${level}`)
         .then(res => res.json())
@@ -86,7 +85,7 @@ export class App extends React.Component {
       });
       this.audioError.currentTime = 0;
       this.audioError.play();
-    }
+    } 
   }
 
   countScore() {
@@ -128,16 +127,7 @@ export class App extends React.Component {
   }
 
   restartGame() {
-    this.setState({
-      score: 0,
-      currentBird: null,
-      answers: [],
-      chosenBird: null,
-      isAnswered: false,
-      numAttempts: 0,
-      isGameEnded: false
-    });
-    this.props.history.replace('/train');
+    location.href = '/train';
   }
 
   render() {

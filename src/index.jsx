@@ -1,17 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
-import history from 'history/hash';
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { createBrowserHistory } from 'history';
 
 import { App } from './containers/App';
 
 import './main.scss';
 
+export const history = createBrowserHistory();
+
 ReactDOM.render(
-  <HashRouter history={history}>
+  <BrowserRouter history={history}>
     <Switch>
-    <Route exact path='/'>
-      <Redirect to='/train' />
+      <Route exact path='/'>
+        <Redirect to='/train' />
       </Route>
       <Route path='/train' component={App} />
       <Route path='/sparrow' component={App} />
@@ -20,7 +22,7 @@ ReactDOM.render(
       <Route path='/predator' component={App} />
       <Route path='/sea' component={App} />
     </Switch>    
-  </HashRouter>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
