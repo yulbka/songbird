@@ -9,10 +9,12 @@ import { Button } from '../components/Button/Button';
 import { Result } from '../components/Result/Result';
 import { Win } from '../components/Win/Win';
 import { levels } from '../components/LevelsList/levelsData';
+import { connect } from 'react-redux';
+import { initAsync, getBirdsDataAsync } from '../store/actions';
 
 import styles from './App.module.scss';
 
-export class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -34,41 +36,23 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
+    const { initialize } = this.props;
     const level = this.props.history.location.pathname.slice(1);
-    fetch('http://localhost:3000/count')
-      .then(res => res.text())
-      .then(data => {
-        this.setState({ levelsNumber: data })
-      });   
-    fetch(`http://localhost:3000/${level}`)
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          birds: data,
-          currentBird: data[Math.floor(Math.random() * Math.floor(this.state.levelsNumber))],
-        });
-      });    
+    initialize(level);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
+      const { getBirdsData } = this.props;
       const level = this.props.history.location.pathname.slice(1);
-      console.log(level);
-      fetch(`http://localhost:3000/${level}`)
-        .then(res => res.json())
-        .then(data => {
-          this.setState({
-            birds: data,
-            currentBird: data[Math.floor(Math.random() * Math.floor(this.state.levelsNumber))],
-          });
-        });
+      getBirdsData(level);
     }
   }
 
   checkAnswer(answer, id) {
     this.chooseBird(id);
     if (this.state.isAnswered) return;
-    const currentBird = this.state.currentBird.name;
+    const currentBird = this.props.currentBird.name;
     const score = this.countScore();
     if (answer === currentBird) {
       this.setState({
@@ -131,7 +115,8 @@ export class App extends React.Component {
   }
 
   render() {
-    const { score, answers, isAnswered, birds, currentBird, chosenBird, isGameEnded, levelsNumber } = this.state;
+    const { score, answers, isAnswered, chosenBird, isGameEnded, levelsNumber } = this.state;
+    const { birds, currentBird } = this.props;
     console.log(birds);
     const { location } = this.props;
     const path = location.pathname.slice(1);
@@ -191,4 +176,29 @@ export class App extends React.Component {
 App.propTypes = {
   location: PropTypes.shape(Object),
   history: PropTypes.shape(Object),
+  initialize: PropTypes.func,
+  getBirdsData: PropTypes.func,
+  birds: PropTypes.array,
+  currentBird: PropTypes.object,
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isBlock: state.game.isBlock,
+    birds: state.game.birds,
+    currentBird: state.game.currentBird,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    initialize: (level) => {
+      dispatch(initAsync(level))
+    },
+    getBirdsData: (level) => {
+      dispatch(getBirdsDataAsync(level))
+    }
+  }
+}
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(App);
