@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { Player } from '../Player/Player';
 import { BirdImage } from '../../components/BirdImage/BirdImage';
@@ -8,23 +9,29 @@ import defaultBird from '../../assets/images/bird-shadow.jpg';
 
 import styles from './Question.module.scss';
 
-export function Question({ title, audioSrc, imageSrc, isAnswered }) {
+const Question = ({ currentBird, isAnswered }) => {
   const defaultTitle = '******';
 
-  return (
+  return currentBird && (
     <div className={styles.wrapper}>
-      <BirdImage imageSrc={isAnswered ? imageSrc: defaultBird} />
+      <BirdImage imageSrc={isAnswered ? currentBird.image: defaultBird} />
       <div className={styles.container}>
-        <h3 className={styles.title}>{isAnswered ? title: defaultTitle}</h3>
-        <Player audioSrc={audioSrc} isAnswered={isAnswered} />
+        <h3 className={styles.title}>{isAnswered ? currentBird.name: defaultTitle}</h3>
+        <Player audioSrc={currentBird.audio} isAnswered={isAnswered} />
       </div>
     </div>
   )
 }
 
 Question.propTypes = {
-  title: PropTypes.string,
-  audioSrc: PropTypes.string,
-  imageSrc: PropTypes.string,
+  currentBird: PropTypes.object,
   isAnswered: PropTypes.bool,
 }
+
+const mapStateToProps = (state) => {
+  return {
+    currentBird: state.game.currentBird,
+  }
+}
+
+export default connect(mapStateToProps)(Question);

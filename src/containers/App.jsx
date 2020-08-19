@@ -2,12 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Header } from '../components/Header/Header';
-import { Question } from './Question/Question';
-import { AnswersList } from '../components/AnswersList/AnswersList';
-import { Description } from '../components/Description/Description';
-import { Button } from '../components/Button/Button';
 import { Result } from '../components/Result/Result';
 import { Win } from '../components/Win/Win';
+import { Game } from './Game/Game';
 import { levels } from '../components/LevelsList/levelsData';
 import { connect } from 'react-redux';
 import { initAsync, getBirdsDataAsync } from '../store/actions';
@@ -20,14 +17,11 @@ class App extends React.Component {
 
     this.state = {
       score: 0,
-      birds: [],
-      currentBird: null,
       answers: [],
       chosenBird: null,
       isAnswered: false,
       numAttempts: 0,
       isGameEnded: false,
-      levelsNumber: null,
     }
 
     this.baseScore = 5;
@@ -78,14 +72,14 @@ class App extends React.Component {
   }
 
   chooseBird(id) {
-    const { birds } = this.state;
+    const { birds } = this.props;
     console.log(birds);
     this.setState({ chosenBird: birds[id - 1] });
   }
 
   goToNextLevel() {
-    const { isAnswered, isGameEnded, levelsNumber } = this.state;
-    const { location } = this.props;
+    const { isAnswered, isGameEnded } = this.state;
+    const { location, levelsNumber } = this.props;
     const path = location.pathname.slice(1);
     const activeLevel = levels.findIndex((level) => level.key === path);
     if (!isAnswered) return;
@@ -115,12 +109,10 @@ class App extends React.Component {
   }
 
   render() {
-    const { score, answers, isAnswered, chosenBird, isGameEnded, levelsNumber } = this.state;
-    const { birds, currentBird } = this.props;
-    console.log(birds);
+    const { score, answers, isAnswered, chosenBird, isGameEnded } = this.state;
+    const { currentBird, levelsNumber } = this.props;
     const { location } = this.props;
     const path = location.pathname.slice(1);
-    console.log(path);
     const level = levels.findIndex((level) => level.key === path);
     console.log(currentBird);
     const maxScore = this.baseScore * levelsNumber;
@@ -129,44 +121,24 @@ class App extends React.Component {
         <Header activeLevel={level} score={score}/>        
         {isGameEnded ? (
           (score === maxScore) ? (
-            <Win />
+            <Win
+              handleClick={this.restartGame}
+            />
           ): (
             <Result
-            score={score}
-            maxScore={maxScore}
-            isAnswered={isAnswered}
-            handleClick={this.goToNextLevel.bind(this)}
-            isGameEnded={isGameEnded}
+              score={score}
+              maxScore={maxScore}
+              isAnswered={isAnswered}
+              handleClick={this.goToNextLevel.bind(this)}
           />
           )) : (
-          <React.Fragment>
-          <Question
-            title={currentBird && currentBird.name}
-            audioSrc={currentBird && currentBird.audio}
-            imageSrc={currentBird && currentBird.image}
-            isAnswered={isAnswered}
-          />
-          <div className={styles['answer-container']}>
-          <AnswersList
-            birds={birds}
+          <Game
             answers={answers}
+            chosenBird={chosenBird}
+            isAnswered={isAnswered}
+            handleClick={this.goToNextLevel.bind(this)}            
             checkAnswer={this.checkAnswer.bind(this)}
           />
-          <Description
-            chosenBird={chosenBird}
-            imageSrc={chosenBird ? chosenBird.image: null}
-            title={chosenBird ? chosenBird.name: null}
-            audioSrc={chosenBird ? chosenBird.audio: null}
-            species={chosenBird ? chosenBird.species: null}
-            description={chosenBird ? chosenBird.description: null}
-          />
-          <Button
-            isAnswered={isAnswered}
-            handleClick={this.goToNextLevel.bind(this)}
-            isGameEnded={isGameEnded}
-          />
-        </div>
-        </React.Fragment>
         )}  
       </div>     
     )
@@ -180,6 +152,7 @@ App.propTypes = {
   getBirdsData: PropTypes.func,
   birds: PropTypes.array,
   currentBird: PropTypes.object,
+  levelsNumber: PropTypes.string,
 }
 
 const mapStateToProps = (state) => {
@@ -187,6 +160,7 @@ const mapStateToProps = (state) => {
     isBlock: state.game.isBlock,
     birds: state.game.birds,
     currentBird: state.game.currentBird,
+    levelsNumber: state.game.levelsNum,
   }
 }
 

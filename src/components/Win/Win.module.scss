@@ -3,7 +3,7 @@
 
 .wrapper {
   margin: 0 auto;
-  padding: 64px 32px;
+  padding: 32px;
   max-width: 1110px;
   background-color: $secondary-background-color;
   border: 1px solid $border-color;
@@ -24,6 +24,7 @@
 }
 
 .img {
+  margin-bottom: 20px;
   border-radius: 5px;
   @include media-mobile {
     width: 250px;

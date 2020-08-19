@@ -5,7 +5,7 @@ import { Button } from '../Button/Button';
 
 import styles from './Result.module.scss';
 
-export function Result({ score, maxScore, isAnswered, handleClick, isGameEnded }) {
+export function Result({ score, maxScore, isAnswered, handleClick }) {
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>Поздравляем!</h2>
@@ -13,7 +13,7 @@ export function Result({ score, maxScore, isAnswered, handleClick, isGameEnded }
       <Button
         isAnswered={isAnswered}
         handleClick={handleClick}
-        isGameEnded={isGameEnded}
+        text={'Попробовать ещё раз'}
       />
     </div>
   )

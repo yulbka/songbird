@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { Answer } from '../Answer/Answer';
 
 import styles from './AnswersList.module.scss';
 
-export function AnswersList({ birds, checkAnswer, answers }) {
+const AnswersList = ({ birds, checkAnswer, answers }) => {
   return (
     <ul className={styles.list}>
       {birds.map((bird) => {
@@ -23,7 +24,14 @@ export function AnswersList({ birds, checkAnswer, answers }) {
 
 AnswersList.propTypes = {
   birds: PropTypes.array,
-  activeLevel: PropTypes.number,
   checkAnswer: PropTypes.func,
   answers: PropTypes.array
 }
+
+const mapStateToProps = (state) => {
+  return {
+    birds: state.game.birds,
+  }
+}
+
+export default connect(mapStateToProps)(AnswersList);

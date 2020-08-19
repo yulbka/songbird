@@ -1,0 +1,8 @@
+@import '../../assets/styles/mixins.scss';
+
+.answer-container {
+  margin: 0 auto;
+  @include flex;
+  flex-wrap: wrap;
+  max-width: 1110px;
+}
