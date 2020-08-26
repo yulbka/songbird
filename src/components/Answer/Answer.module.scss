@@ -1,0 +1,31 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+.bird {
+  padding: 15px 20px;
+  list-style: none;
+  cursor: pointer;
+  &:hover {
+    background-color: $circle-color;
+  }
+}
+
+.name {
+  color: $text-color;
+  @include font(15px);
+}
+
+.circle {
+  margin-right: 10px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: $circle-color;
+  border-radius: 50%;
+  &.correct {
+    background-color: $button-color-active;
+  }
+  &.wrong {
+    background-color: $mistake-color;
+  }
+}

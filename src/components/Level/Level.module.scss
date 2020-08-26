@@ -1,0 +1,22 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+.level {
+  flex: auto;
+  list-style: none;
+  & button {
+    padding: 7px;
+    width: 100%;
+    background-color: $button-color;
+    color: $text-color;
+    @include font;
+    border: 0 solid $button-color;
+    outline: none;
+  }  
+}
+
+.active {
+  & button {
+    background-color: $button-color-active;
+  }
+}

@@ -1,0 +1,30 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+.wrapper {
+  margin: 0 auto;
+  padding: 15px;
+  @include flex(row, flex-start);
+  max-width: 1110px;
+  background-color: $secondary-background-color;
+  box-sizing: border-box;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  @include media-mobile {
+    flex-direction: column;
+  }
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+}
+
+.title {
+  color: $text-color;
+  @include font(32px, bold);
+  border-bottom: 1px solid $border-color;
+  @include media-mobile {
+    text-align: center;
+  }
+}

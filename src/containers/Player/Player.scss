@@ -1,0 +1,72 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+.player {
+  position: relative;
+  @include flex(row, flex-start, flex-end);
+}
+
+.play {
+  margin-right: 30px;
+  @include flex(row, center);
+  width: 40px;
+  height: 40px;
+  border: 2px solid $button-color-active;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.volume {
+  position: absolute;
+  bottom: 1px;
+  right: -12px;
+  cursor: pointer;
+  & img {
+    position: absolute;
+    bottom: 10px;
+    right: 2px;
+  }
+  &:hover {
+    width: 150px;
+    height: 40px;
+    background-color: $secondary-background-color;
+    border: 2px solid $border-color;
+    border-radius: 18px;
+    & img {
+      bottom: 7px;
+      right: 7px;
+    }
+    & .input-range {
+      display: block;
+    }
+  }
+}
+
+.input-range {
+  position: absolute;
+  bottom: 11px;
+  left: 15px;
+  display: none;
+  width: 85px;
+}
+
+.input-range__label {
+  display: none;
+}
+
+.input-range__slider {
+  width: 16px;
+  height: 16px;
+  background: $track-color;
+  border: none;
+  &:active {
+    transform: scale(1);
+  }
+}
+
+.input-range__track {
+  background: $track-color;
+  &--active {
+    background: $button-color-active;
+  }
+}

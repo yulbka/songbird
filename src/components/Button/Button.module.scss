@@ -1,0 +1,22 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+.button {
+  margin-bottom: 16px;
+  padding: 10px 0;
+  max-width: 1110px;
+  width: 100%;
+  background-color: $secondary-background-color;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  color: $text-color;
+  @include font(18px);
+  align-self : center;
+  outline: none;
+}
+
+.active {
+  background-color: $button-color-active;
+  border: 1px solid $button-color-active;
+  cursor: pointer;
+}

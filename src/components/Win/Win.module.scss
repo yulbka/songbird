@@ -1,0 +1,32 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+.wrapper {
+  margin: 0 auto;
+  padding: 64px 32px;
+  max-width: 1110px;
+  background-color: $secondary-background-color;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  @include media-mobile {
+    padding: 30px 10px;;
+  }
+}
+
+.title {
+  margin: 0 0 20px;
+  @include font(72px);
+  @include media-mobile {
+    font-size: 34px;
+  }
+}
+
+.img {
+  border-radius: 5px;
+  @include media-mobile {
+    width: 250px;
+    height: 335px;
+  }
+}
