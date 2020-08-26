@@ -9,7 +9,7 @@ export function Button({ isAnswered, handleClick, isGameEnded }) {
       className={isAnswered ? `${styles.button} ${styles.active}`: styles.button}
       onClick={handleClick}
     >
-      {isGameEnded ? 'Попробовать ещё раз': 'Следуюший уровень'}
+      {isGameEnded ? 'Попробовать ещё раз': 'Следующий уровень'}
     </button>
   )
 }
